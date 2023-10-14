@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
-  imports: [],
+  imports: [QuizModule],
   // LEARN: Remember to put all the written controllers here.
   controllers: [AppController],
   // LEARN: Services are single-purposed classes that are injected into their
