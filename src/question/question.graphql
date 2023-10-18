@@ -1,0 +1,67 @@
+# ============ Output types ============ 
+interface Question {
+  id: Int!
+  text: String!
+}
+
+type SingleChoiceQuestion implements Question {
+  id: Int!
+  text: String!
+  options: [AnswerOption!]
+  correctAnswer: AnswerOption!
+}
+
+type MultipleChoiceQuestion implements Question {
+  id: Int!
+  text: String!
+  options: [AnswerOption!]
+  correctAnswersIDs: [AnswerOption!]
+}
+
+type SortingQuestion implements Question {
+  id: Int!
+  text: String!
+  options: [AnswerOption!]!
+  correctSorting: [Int!]! # client should provide an ordered list of AnswerOption IDs
+}
+
+type OpenQuestion implements Question {
+  id: Int!
+  text: String!
+  correctAnswer: AnswerOption!
+}
+
+type AnswerOption {
+  id: Int!
+  text: String!
+}
+
+
+# ============ Input types ============ 
+input CreateSingleChoiceQuestionInput {
+  text: String!
+  options: [CreateAnswerOptionInput!]!
+  correctAnswer: CreateAnswerOptionInput!
+}
+
+input CreateMultipleChoiceQuestionInput {
+  text: String!
+  options: [CreateAnswerOptionInput!]!
+  correctAnswers: [CreateAnswerOptionInput!]!
+}
+
+input CreateSortingQuestionInput {
+  text: String!
+  options: [CreateAnswerOptionInput!]!
+  correctSorting: [Int!]!
+}
+
+input CreateOpenQuestionInput {
+  text: String!
+  correctAnswer: CreateAnswerOptionInput!
+}
+
+input CreateAnswerOptionInput {
+  text: String!
+}
+

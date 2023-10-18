@@ -12,7 +12,7 @@ export class QuizResolver {
     return this.quizService.create(createQuizInput);
   }
 
-  @Query('quiz')
+  @Query('quizzes')
   findAll() {
     return this.quizService.findAll();
   }

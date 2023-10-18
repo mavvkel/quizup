@@ -1,19 +1,6 @@
-type Quiz {
-  # Example field (placeholder)
-  exampleField: Int
-}
-
-input CreateQuizInput {
-  # Example field (placeholder)
-  exampleField: Int
-}
-
-input UpdateQuizInput {
-  id: Int!
-}
-
+# ============ Output types ============ 
 type Query {
-  quiz: [Quiz]!
+  quizzes: [Quiz!]
   quiz(id: Int!): Quiz
 }
 
@@ -22,3 +9,24 @@ type Mutation {
   updateQuiz(updateQuizInput: UpdateQuizInput!): Quiz!
   removeQuiz(id: Int!): Quiz
 }
+
+type Quiz {
+  id: Int!
+  name: String!
+  questions: [Question!]
+}
+
+# ============ Input types ============ 
+input CreateQuizInput {
+  name: String!
+  questions: [Question!]! # this is an issue
+}
+
+input UpdateQuizInput {
+  id: Int!
+}
+
+# input CreateQuestionInput {
+#   text: String!
+# }
+
