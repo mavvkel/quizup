@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateQuizInput } from './dto/create-quiz.input';
 import { UpdateQuizInput } from './dto/update-quiz.input';
 
+// [DEBUG] Mock DB
 const algebraQuestionsList = [
   {
     id: 1,

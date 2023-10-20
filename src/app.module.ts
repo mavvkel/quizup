@@ -6,12 +6,13 @@ import { QuestionModule } from './question/question.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 
 @Module({
   imports: [
-    QuestionModule,
-    QuizModule,
+    ConfigModule.forRoot(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       include: [QuestionModule, QuizModule],
@@ -23,6 +24,19 @@ import { join } from 'path';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.HOST,
+      port: parseInt(process.env.DB_PORT),
+      password: process.env.POSTGRES_PASSWORD,
+      username: process.env.POSTGRES_USER,
+      entities: [],
+      database: process.env.POSTGRES_DB,
+      synchronize: true,
+      logging: true, // [DEBUG] remove for prod
+    }),
+    QuestionModule,
+    QuizModule,
   ],
   // LEARN: Remember to put all the written controllers here.
   controllers: [AppController],

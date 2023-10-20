@@ -19,7 +19,7 @@ type Quiz {
 # ============ Input types ============ 
 input CreateQuizInput {
   name: String!
-  questions: [Question!]! # this is an issue
+  questions: [CreateSingleChoiceQuestionInput!]! # this is an issue
 }
 
 input UpdateQuizInput {
