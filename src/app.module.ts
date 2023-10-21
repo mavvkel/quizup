@@ -9,8 +9,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
-import { ChoiceQuestion } from './question/entities/question.entity';
-import { AnswerOption } from './question/entities/answeroption.entity';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -18,7 +17,7 @@ import { AnswerOption } from './question/entities/answeroption.entity';
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      include: [QuestionModule, QuizModule],
+      include: [AnswerModule, QuestionModule, QuizModule],
       typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
@@ -34,11 +33,12 @@ import { AnswerOption } from './question/entities/answeroption.entity';
       port: parseInt(process.env.DB_PORT),
       password: process.env.POSTGRES_PASSWORD,
       username: process.env.POSTGRES_USER,
-      entities: [ChoiceQuestion, AnswerOption],
       database: process.env.POSTGRES_DB,
+      autoLoadEntities: true,
       synchronize: true,
       logging: true, // [DEBUG] remove for prod
     }),
+    AnswerModule,
     QuestionModule,
     QuizModule,
   ],

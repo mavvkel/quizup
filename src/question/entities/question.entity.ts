@@ -3,42 +3,32 @@ import {
   PrimaryGeneratedColumn,
   Column,
   TableInheritance,
-  ChildEntity,
   OneToMany,
-  OneToOne,
+  ManyToOne,
 } from 'typeorm';
-import { AnswerOption, SortingAnswerOption } from './answeroption.entity';
+import { Answer } from '../../answer/entities/answer.entity';
+import { QuestionType } from './QuestionType';
+import { Quiz } from '../../quiz/entities/quiz.entity';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
-export class ChoiceQuestion {
+export abstract class Question {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   text: string;
 
-  @OneToMany(() => AnswerOption, (answerOption) => answerOption.question)
-  answerOptions: AnswerOption[];
-}
+  @OneToMany(() => Answer, (answer) => answer.question)
+  answers: Answer[];
 
-@ChildEntity()
-export class SingleChoiceQuestion extends ChoiceQuestion {
-  @OneToOne(() => AnswerOption)
-  correctAnswer: AnswerOption;
-}
+  @Column({
+    type: 'enum',
+    enum: QuestionType,
+    default: QuestionType.SINGLECHOICE,
+  })
+  type: QuestionType;
 
-@ChildEntity()
-export class MultipleChoiceQuestion extends ChoiceQuestion {
-  @OneToMany(() => AnswerOption, (answerOption) => answerOption.question)
-  correctAnswers: AnswerOption[];
-}
-
-@ChildEntity()
-export class SortingChoiceQuestion extends ChoiceQuestion {
-  @OneToMany(
-    () => SortingAnswerOption,
-    (sortingAnswerOption) => sortingAnswerOption.question,
-  )
-  correctAnswer: SortingAnswerOption[];
+  @ManyToOne(() => Quiz, (quiz) => quiz.questions)
+  quiz: Quiz;
 }
