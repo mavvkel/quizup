@@ -9,10 +9,13 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
+import { ChoiceQuestion } from './question/entities/question.entity';
+import { AnswerOption } from './question/entities/answeroption.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       include: [QuestionModule, QuizModule],
@@ -24,13 +27,14 @@ import { join } from 'path';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
+
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.HOST,
       port: parseInt(process.env.DB_PORT),
       password: process.env.POSTGRES_PASSWORD,
       username: process.env.POSTGRES_USER,
-      entities: [],
+      entities: [ChoiceQuestion, AnswerOption],
       database: process.env.POSTGRES_DB,
       synchronize: true,
       logging: true, // [DEBUG] remove for prod
