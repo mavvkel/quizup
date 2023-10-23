@@ -1,32 +1,23 @@
 # ============ Output types ============ 
 type Query {
   quizzes: [Quiz!]
-  quiz(id: Int!): Quiz
+  quiz(id: ID!): Quiz
 }
 
 type Mutation {
-  createQuiz(createQuizInput: CreateQuizInput!): Quiz!
-  updateQuiz(updateQuizInput: UpdateQuizInput!): Quiz!
-  removeQuiz(id: Int!): Quiz
+  createQuiz(createQuizInput: CreateQuizInput): Quiz
+  # updateQuiz(updateQuizInput: UpdateQuizInput!): Quiz!
+  # removeQuiz(id: Int!): Quiz
 }
 
 type Quiz {
-  id: Int!
-  name: String!
+  id: ID!
+  title: String!
   questions: [Question!]
 }
 
 # ============ Input types ============ 
 input CreateQuizInput {
-  name: String!
-  questions: [CreateSingleChoiceQuestionInput!]! # this is an issue
+  title: String!
+  questions: [CreateQuestionInput!]!
 }
-
-input UpdateQuizInput {
-  id: Int!
-}
-
-# input CreateQuestionInput {
-#   text: String!
-# }
-

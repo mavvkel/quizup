@@ -1,34 +1,46 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Int, Query, Mutation, Parent, Args, ResolveField } from '@nestjs/graphql';
 import { QuizService } from './quiz.service';
+import { QuestionService } from 'src/question/question.service';
 import { CreateQuizInput } from './dto/create-quiz.input';
-import { UpdateQuizInput } from './dto/update-quiz.input';
+import { Question } from 'src/question/entities/question.entity';
+import { Quiz } from './entities/quiz.entity';
 
-@Resolver('Quiz')
+@Resolver(() => Quiz)
 export class QuizResolver {
-  constructor(private readonly quizService: QuizService) {}
+  constructor(
+    private readonly quizService: QuizService,
+    private readonly questionService: QuestionService,
+  ) {}
 
-  @Mutation('createQuiz')
-  create(@Args('createQuizInput') createQuizInput: CreateQuizInput) {
-    return this.quizService.create(createQuizInput);
-  }
+  //@Mutation(() => Quiz)
+  //create(@Args('createQuizInput') createQuizInput: CreateQuizInput) {
+  //  return this.quizService.create(createQuizInput);
+  //}
 
-  @Query('quizzes')
-  findAll() {
+  @Query(returns => [Quiz])
+  async quizzes(): Promise<Quiz[]> {
+    console.log('[DEBUG]: QuizResolver quizzes() called');
     return this.quizService.findAll();
   }
 
-  @Query('quiz')
-  findOne(@Args('id') id: number) {
-    return this.quizService.findOne(id);
+  @Query(returns => Quiz, { nullable: true }) // LEARN: queries by ID should be nullable in case the entity with that ID does not exist
+  async quiz(@Args('id', { type: () => Int }) id: number): Promise<Quiz> {
+    return await this.quizService.findOne(id);
   }
 
-  @Mutation('updateQuiz')
-  update(@Args('updateQuizInput') updateQuizInput: UpdateQuizInput) {
-    return this.quizService.update(updateQuizInput.id, updateQuizInput);
+  @ResolveField(returns => [Question])
+  async questions(@Parent() id: number): Promise<Question[]> {
+    console.log('[DEBUG]: QuizResolver .questions(id) called');
+    return await this.questionService.findByQuizID(id);
   }
 
-  @Mutation('removeQuiz')
-  remove(@Args('id') id: number) {
-    return this.quizService.remove(id);
-  }
+  //@Mutation('updateQuiz')
+  //update(@Args('updateQuizInput') updateQuizInput: UpdateQuizInput) {
+  //  return this.quizService.update(updateQuizInput.id, updateQuizInput);
+  //}
+
+  //@Mutation('removeQuiz')
+  //remove(@Args('id') id: number) {
+  //  return this.quizService.remove(id);
+  //}
 }

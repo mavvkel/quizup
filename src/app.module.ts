@@ -18,7 +18,8 @@ import { AnswerModule } from './answer/answer.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       include: [AnswerModule, QuestionModule, QuizModule],
-      typePaths: ['./**/*.graphql'],
+      autoSchemaFile: 'schema.graphql',
+      //typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
         outputAs: 'class',

@@ -1,4 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Answer } from './entities/answer.entity';
 
 @Injectable()
-export class AnswerService {}
+export class AnswerService {
+  constructor(
+    @InjectRepository(Answer)
+    private answerRepository: Repository<Answer>,
+  ) {}
+
+  //create(answerDetails: CreateAnswerInput) {
+  //  console.log('[DEBUG]: QuestionService create called');
+  //  const newAnswer = this.answerRepository.create({ ...answerDetails });
+  //  return this.answerRepository.save(newAnswer);
+  //}
+}

@@ -1,6 +1,10 @@
 # ============ Output types ============ 
+type Mutation {
+  createQuestion(createQuestionInput: CreateQuestionInput!): Question!
+}
+
 interface Question {
-  id: Int!
+  id: ID!
   text: String!
 }
 
@@ -22,7 +26,6 @@ type SortingQuestion implements Question {
   id: Int!
   text: String!
   options: [AnswerOption!]!
-  correctSorting: [Int!]! # client should provide an ordered list of AnswerOption IDs
 }
 
 type OpenQuestion implements Question {
@@ -31,37 +34,10 @@ type OpenQuestion implements Question {
   correctAnswer: AnswerOption!
 }
 
-type AnswerOption {
-  id: Int!
-  text: String!
-}
-
-
 # ============ Input types ============ 
-input CreateSingleChoiceQuestionInput {
+input CreateQuestionInput {
   text: String!
-  options: [CreateAnswerOptionInput!]!
-  correctAnswer: CreateAnswerOptionInput!
-}
-
-input CreateMultipleChoiceQuestionInput {
-  text: String!
-  options: [CreateAnswerOptionInput!]!
-  correctAnswers: [CreateAnswerOptionInput!]!
-}
-
-input CreateSortingQuestionInput {
-  text: String!
-  options: [CreateAnswerOptionInput!]!
-  correctSorting: [Int!]!
-}
-
-input CreateOpenQuestionInput {
-  text: String!
-  correctAnswer: CreateAnswerOptionInput!
-}
-
-input CreateAnswerOptionInput {
-  text: String!
+  answers: [CreateAnswerInput!]!
+  type: Int!
 }
 
