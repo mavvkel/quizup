@@ -3,7 +3,6 @@ import { QuestionService } from './question.service';
 import { Question } from './entities/question.entity';
 //import { AnswerService } from 'src/answer/answer.service';
 import { Query, Parent } from '@nestjs/graphql';
-import { CreateQuestionInput } from './dto/create-question.input';
 
 @Resolver('Question')
 export class QuestionResolver {
