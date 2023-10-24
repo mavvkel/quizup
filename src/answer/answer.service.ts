@@ -11,16 +11,9 @@ export class AnswerService {
   ) {}
 
   findByQuestionID(questionID: number) {
-    console.log('[DEBUG]: AnswerService findByQuestionID() called');
     return this.answerRepository
       .createQueryBuilder('answer')
       .where('answer.questionId = :id', { id: questionID })
       .getMany();
   }
-  
-  //create(answerDetails: CreateAnswerInput) {
-  //  console.log('[DEBUG]: QuestionService create called');
-  //  const newAnswer = this.answerRepository.create({ ...answerDetails });
-  //  return this.answerRepository.save(newAnswer);
-  //}
 }

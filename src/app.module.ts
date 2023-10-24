@@ -19,7 +19,6 @@ import { AnswerModule } from './answer/answer.module';
       driver: ApolloDriver,
       include: [AnswerModule, QuestionModule, QuizModule],
       autoSchemaFile: 'schema.graphql',
-      //typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
         outputAs: 'class',
@@ -36,19 +35,14 @@ import { AnswerModule } from './answer/answer.module';
       username: process.env.POSTGRES_USER,
       database: process.env.POSTGRES_DB,
       autoLoadEntities: true,
-      synchronize: true,
-      logging: true, // [DEBUG] remove for prod
+      synchronize: true, // [DEBUG] remove for prod
+      logging: false, 
     }),
     AnswerModule,
     QuestionModule,
     QuizModule,
   ],
-  // LEARN: Remember to put all the written controllers here.
   controllers: [AppController],
-  // LEARN: Services are single-purposed classes that are injected into their
-  // consumers to accomplish some particular goal (f.e. retrieve data).
-  // LEARN: Nest will take care of injecting all the providers (f.e. Services),
-  // into their consumers (f.e. Controllers).
   providers: [AppService],
 })
 export class AppModule {}

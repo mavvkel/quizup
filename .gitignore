@@ -44,5 +44,9 @@ features.todo
 # Generated files
 src/graphql.ts
 schema.graphql
+
+# Manual test data
 test-output.json
 test-input.json
+test-queries.json
+test-mutation.json

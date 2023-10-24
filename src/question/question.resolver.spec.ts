@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QuestionResolver } from './question.resolver';
-// import { QuestionService } from './quiz.service';
 
 describe('QuestionResolver', () => {
   let resolver: QuestionResolver;
@@ -17,5 +16,4 @@ describe('QuestionResolver', () => {
     expect(resolver).toBeDefined();
   });
 
-  // it('')
 });

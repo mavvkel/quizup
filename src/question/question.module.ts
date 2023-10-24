@@ -8,7 +8,6 @@ import { AnswerModule } from 'src/answer/answer.module';
 import { Answer } from 'src/answer/entities/answer.entity';
 
 @Module({
-  // LEARN: Only mentioned Object repositories will be available to this module
   imports: [TypeOrmModule.forFeature([Question, Answer]), AnswerModule],
   providers: [QuestionResolver, QuestionService, AnswerService],
 })
