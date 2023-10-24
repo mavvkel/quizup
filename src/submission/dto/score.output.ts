@@ -4,4 +4,7 @@ import { Field, ObjectType, Int } from '@nestjs/graphql';
 export class Score {
   @Field((type) => Int, { nullable: false })
   points: number;
+
+  @Field((type) => Int, { nullable: false })
+  outOf: number;
 }
