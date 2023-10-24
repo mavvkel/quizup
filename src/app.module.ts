@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { AnswerModule } from './answer/answer.module';
+import { SubmissionModule } from './submission/submission.module';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { AnswerModule } from './answer/answer.module';
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      include: [AnswerModule, QuestionModule, QuizModule],
+      include: [AnswerModule, QuestionModule, QuizModule, SubmissionModule],
       autoSchemaFile: 'schema.graphql',
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
@@ -36,11 +37,12 @@ import { AnswerModule } from './answer/answer.module';
       database: process.env.POSTGRES_DB,
       autoLoadEntities: true,
       synchronize: true, // [DEBUG] remove for prod
-      logging: false, 
+      logging: true,
     }),
     AnswerModule,
     QuestionModule,
     QuizModule,
+    SubmissionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

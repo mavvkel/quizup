@@ -5,7 +5,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 @ObjectType()
 @Entity()
 export class Quiz {
-  @Field(type => Int)
+  @Field((type) => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,7 +13,7 @@ export class Quiz {
   @Column()
   title: string;
 
-  @Field(type => [Question])
+  @Field((type) => [Question])
   @OneToMany(() => Question, (question) => question.quiz, {
     cascade: ['insert', 'update', 'remove'],
   })
