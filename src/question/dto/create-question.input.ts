@@ -1,7 +1,11 @@
-export class CreateChoiceQuestionInput {
-  readonly text: string;
-}
+import { InputType, Field } from '@nestjs/graphql';
+import { CreateAnswerInput } from 'src/answer/dto/create-answer.input';
 
-export class CreateAnswerOptionInput {
-  readonly content: string;
+@InputType()
+export class CreateQuestionInput {
+  @Field()
+  readonly text: string;
+
+  @Field(type => [CreateAnswerInput])
+  readonly answers: CreateAnswerInput[];
 }

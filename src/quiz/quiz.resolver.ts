@@ -5,22 +5,23 @@ import { CreateQuizInput } from './dto/create-quiz.input';
 import { Question } from 'src/question/entities/question.entity';
 import { Quiz } from './entities/quiz.entity';
 
-@Resolver(() => Quiz)
+@Resolver(type => Quiz)
 export class QuizResolver {
   constructor(
     private readonly quizService: QuizService,
     private readonly questionService: QuestionService,
   ) {}
 
-  //@Mutation(() => Quiz)
-  //create(@Args('createQuizInput') createQuizInput: CreateQuizInput) {
-  //  return this.quizService.create(createQuizInput);
-  //}
+  @Mutation(returns => Quiz)
+  async createQuiz(@Args('createQuizInput') createQuizInput: CreateQuizInput) {
+    console.log('[DEBUG]: QuizResolver createQuiz() called');
+    return await this.quizService.create(createQuizInput);
+  }
 
   @Query(returns => [Quiz])
   async quizzes(): Promise<Quiz[]> {
     console.log('[DEBUG]: QuizResolver quizzes() called');
-    return this.quizService.findAll();
+    return await this.quizService.findAll();
   }
 
   @Query(returns => Quiz, { nullable: true }) // LEARN: queries by ID should be nullable in case the entity with that ID does not exist
@@ -29,8 +30,9 @@ export class QuizResolver {
   }
 
   @ResolveField(returns => [Question])
-  async questions(@Parent() id: number): Promise<Question[]> {
-    console.log('[DEBUG]: QuizResolver .questions(id) called');
+  async questions(@Parent() quiz: { id: number; } ): Promise<Question[]> {
+    console.log('[DEBUG]: QuizResolver .questions called');
+    const { id } = quiz;
     return await this.questionService.findByQuizID(id);
   }
 

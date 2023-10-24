@@ -1,12 +1,14 @@
 import { Resolver, ResolveField, Mutation, Args } from '@nestjs/graphql';
-import { QuestionService } from './question.service';
+import { Parent } from '@nestjs/graphql';
+import { Answer } from 'src/answer/entities/answer.entity';
+import { AnswerService } from 'src/answer/answer.service';
 import { Question } from './entities/question.entity';
-//import { AnswerService } from 'src/answer/answer.service';
-import { Query, Parent } from '@nestjs/graphql';
 
-@Resolver('Question')
+@Resolver(type => Question)
 export class QuestionResolver {
-  constructor(private questionService: QuestionService) {}
+  constructor(
+    private answerService: AnswerService,
+  ) {}
 
   //@Mutation()
   //createQuestion(
@@ -14,19 +16,11 @@ export class QuestionResolver {
   //) {
   //  return this.questionService.create({ ...questionDetails });
   //}
-
-  //@ResolveField()
-  //__resolveType(question, contextValue, info) {
-  //  console.log('[DEBUG]: __resolveType called');
-  //  if (question.correctAnswer && !question.options) {
-  //    return 'OpenQuestion';
-  //  } else if (question.correctAnswersIDs) {
-  //    return 'MultipleChoiceQuestion';
-  //  } else if (question.correctAnswer) {
-  //    return 'SingleChoiceQuestion';
-  //  } else if (question.correctSorting) {
-  //    return 'SortingChoiceQuestion';
-  //  }
-  //  return null;
-  //}
+  
+  @ResolveField(returns => [Answer])
+  async answers(@Parent() question: { id: number; } ): Promise<Answer[]> {
+    console.log('[DEBUG]: QuestionResolver .answers called');
+    const { id } = question;
+    return await this.answerService.findByQuestionID(id);
+  }
 }
