@@ -1,0 +1,14 @@
+# ============ Output types ============ 
+type Answer {
+  id: ID!
+  content: String!
+  rank: Int
+  isCorrect: Boolean
+}
+
+# ============ Input types ============ 
+input CreateAnswerInput {
+  content: String!
+  rank: Int
+  isCorrect: Boolean
+}

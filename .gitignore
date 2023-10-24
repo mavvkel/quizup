@@ -40,3 +40,9 @@ lerna-debug.log*
 
 # TODOs
 features.todo
+
+# Generated files
+src/graphql.ts
+schema.graphql
+test-output.json
+test-input.json
