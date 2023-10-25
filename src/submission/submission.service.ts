@@ -7,6 +7,7 @@ import { QuestionSubmissionInput } from './dto/questionsubmission.input';
 import { Answer } from 'src/answer/entities/answer.entity';
 import { QuestionType } from 'src/question/entities/QuestionType';
 import { Question } from 'src/question/entities/question.entity';
+import { compareArrays } from 'src/util';
 
 @Injectable()
 export class SubmissionService {
@@ -19,13 +20,10 @@ export class SubmissionService {
     const questions: Question[] = await this.questionService.findByQuizID(
       submission.quizID,
     );
-    // console.log(questions); // DEBUG - if statement here based on the content
 
     const totalScore: Score = { points: 0, outOf: questions.length };
     for (const answer of submission.answers) {
-      console.log(answer);
       totalScore.points += await this.scoreQuestionSubmission(answer);
-      console.log(totalScore);
     }
 
     return totalScore;
@@ -47,21 +45,22 @@ export class SubmissionService {
       }
 
       case QuestionType.MULTIPLECHOICE: {
-        const correctIDs: number[] = correct.map((ans) => ans.id);
+        const correctIDs: number[] = correct.map((ans) => ans.id).sort();
+
         return Number(
-          JSON.stringify(questionSubmission.answerIDs.sort()) ===
-            JSON.stringify(correctIDs.sort()),
-        ); // This comparison could be more efficient
+          compareArrays<number>(
+            questionSubmission.answerIDs.sort(),
+            correctIDs,
+          ),
+        );
       }
 
       case QuestionType.SORTING: {
-        console.log(
-          JSON.stringify(await this.answerService.getSorting(question)),
-        );
-        console.log(JSON.stringify(questionSubmission.sortedAnswerIDs));
         return Number(
-          JSON.stringify(await this.answerService.getSorting(question)) ===
-            JSON.stringify(questionSubmission.sortedAnswerIDs),
+          compareArrays<number>(
+            await this.answerService.getSorting(question),
+            questionSubmission.sortedAnswerIDs,
+          ),
         );
       }
 
