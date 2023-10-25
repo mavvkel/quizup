@@ -5,7 +5,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 @ObjectType()
 @Entity()
 export class Answer {
-  @Field(type => Int)
+  @Field((type) => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,7 +13,7 @@ export class Answer {
   @Column()
   content: string;
 
-  @Field(type => Int, { nullable: true })
+  @Field((type) => Int, { nullable: true })
   @Column({ nullable: true })
   rank: number;
 
@@ -25,4 +25,10 @@ export class Answer {
     onDelete: 'CASCADE',
   })
   question: Question;
+
+  public static compare(a: Answer, b: Answer): number {
+    if (a.rank > b.rank) return 1;
+    else if (a.rank < b.rank) return -1;
+    else return 0;
+  }
 }

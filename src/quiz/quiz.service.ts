@@ -14,10 +14,14 @@ export class QuizService {
   ) {}
 
   async create(createQuizInput: CreateQuizInput): Promise<Quiz> {
-
-    const newQuestionsWithTypes = this.questionService.augmentQuestionTypes(createQuizInput.questions);
-    const newQuiz : Quiz = this.quizRepository.create({ title: createQuizInput.title, questions: newQuestionsWithTypes})
-    const savedQuiz : Quiz = await this.quizRepository.save(newQuiz);
+    const newQuestionsWithTypes = this.questionService.augmentQuestionTypes(
+      createQuizInput.questions,
+    );
+    const newQuiz: Quiz = this.quizRepository.create({
+      title: createQuizInput.title,
+      questions: newQuestionsWithTypes,
+    });
+    const savedQuiz: Quiz = await this.quizRepository.save(newQuiz);
     return savedQuiz;
   }
 

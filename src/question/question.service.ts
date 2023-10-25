@@ -43,6 +43,13 @@ export class QuestionService {
     return questionsWithTypes;
   }
 
+  findByID(ID: number): Promise<Question> {
+    return this.questionRepository
+      .createQueryBuilder('question')
+      .where('question.id = :id', { id: ID })
+      .getOne();
+  }
+
   static hasDefinedRanks(question: CreateQuestionInput): boolean {
     return !question.answers.some((answer) => answer.rank == null);
   }
@@ -55,5 +62,4 @@ export class QuestionService {
       }
     return count;
   }
-
 }
