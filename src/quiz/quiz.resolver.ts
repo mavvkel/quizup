@@ -8,7 +8,7 @@ import {
   ResolveField,
 } from '@nestjs/graphql';
 import { QuizService } from './quiz.service';
-import { QuestionService } from 'src/question/QuestionService';
+import { QuestionService } from 'src/question/question.service';
 import { CreateQuizInput } from './dto/create-quiz.input';
 import { Question } from 'src/question/entities/question.entity';
 import { Quiz } from './entities/quiz.entity';
