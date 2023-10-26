@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QuizSubmissionInput } from './dto/quizsubmission.input';
 import { Score } from './dto/score.output';
-import { QuestionService } from 'src/question/question.service';
+import { QuestionService } from 'src/question/QuestionService';
 import { AnswerService } from 'src/answer/answer.service';
 import { QuestionSubmissionInput } from './dto/questionsubmission.input';
 import { Answer } from 'src/answer/entities/answer.entity';
