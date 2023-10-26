@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Answer } from './entities/answer.entity';
 import { Question } from 'src/question/entities/question.entity';
 import { QuestionType } from 'src/question/entities/QuestionType';
+import { QuestionTypeError } from 'src/question/QuestionTypeError';
 
 @Injectable()
 export class AnswerService {
@@ -28,7 +29,14 @@ export class AnswerService {
   }
 
   async getSorting(question: Question): Promise<number[]> {
-    if (question.type != QuestionType.SORTING) return null;
+    if (question.type != QuestionType.SORTING) {
+      throw new QuestionTypeError(
+        `getSorting accepts only SORTING questions, but ${
+          QuestionType[question.type]
+        } was given.`,
+        question.type,
+      );
+    }
 
     const answers: Answer[] = await this.findByQuestionID(question.id);
     const sortedIDs: number[] = answers

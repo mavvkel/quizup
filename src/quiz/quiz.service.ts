@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { Quiz } from './entities/quiz.entity';
 import { CreateQuizInput } from './dto/create-quiz.input';
-import { QuestionService } from 'src/question/question.service';
+import { QuestionService } from 'src/question/QuestionService';
+import { Question } from 'src/question/entities/question.entity';
 
 @Injectable()
 export class QuizService {
@@ -14,9 +15,8 @@ export class QuizService {
   ) {}
 
   async create(createQuizInput: CreateQuizInput): Promise<Quiz> {
-    const newQuestionsWithTypes = this.questionService.augmentQuestionTypes(
-      createQuizInput.questions,
-    );
+    const newQuestionsWithTypes: DeepPartial<Question>[] =
+      this.questionService.augmentQuestionTypes(createQuizInput.questions);
     const newQuiz: Quiz = this.quizRepository.create({
       title: createQuizInput.title,
       questions: newQuestionsWithTypes,
