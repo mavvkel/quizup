@@ -24,7 +24,10 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Application for creating, taking & scoring simple quizzes using GraphQL API.
+
+## Required dependencies
+Docker
 
 ## Installation
 
@@ -33,7 +36,11 @@ $ npm install
 ```
 
 ## Running the app
-
+First run the container with the postgres DB inside.
+```bash
+$ docker-compose up -d
+```
+Then run the application.
 ```bash
 # development
 $ npm run start
@@ -58,16 +65,86 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## API usage
+
+Retrieve a quiz with
+```graphql
+query Query($quizId: Int!) {
+  quiz(id: $quizId) {
+    ...
+  }
+}
+```
+
+Create a quiz with
+```graphql
+mutation Mutation($createQuizInput: CreateQuizInput!) {
+  createQuiz(createQuizInput: $createQuizInput) {
+    ...
+  }
+}
+```
+with the input of form
+```graphql
+{
+  "createQuizInput": {
+    "title": "<String>",
+    "questions": [
+      {
+        "text": "<String>",
+        "answers": [
+          {
+            "content": "<String>",
+            "isCorrect": <Boolean>,
+            "rank": <null or Int>
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Score a quiz submission with
+```graphql
+mutation ScoreSubmission($submissionInput: QuizSubmissionInput!) {
+  scoreSubmission(submissionInput: $submissionInput) {
+    points
+    outOf
+  }
+}
+```
+with the input of form
+```graphql
+{
+  "submissionInput": {
+    "quizID": <Int>,
+    "answers": [
+      // For single choice questions
+      {
+        "questionID": <Int>,
+        "answerID": <Int>,
+      },
+      // For multiple choice questions
+      {
+        "questionID": <Int>,
+        "answerIDs": <[Int]>,
+      },
+      // For sorting questions
+      {
+        "questionID": <Int>,
+        "sortedAnswerIDs": <[Int]>,
+      },
+      // For open questions
+      {
+        "questionID": <Int>,
+        "answer": "<String>",
+      },
+    ]
+  } 
+}
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
