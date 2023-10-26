@@ -5,7 +5,7 @@ export class QuestionSubmissionInput {
   @Field((type) => Int!)
   readonly questionID: number;
 
-  @Field((type) => Int, { nullable: true})
+  @Field((type) => Int, { nullable: true })
   readonly answerID: number;
 
   @Field((type) => [Int], { nullable: true })

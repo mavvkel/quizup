@@ -8,6 +8,6 @@ export class CreateAnswerInput {
   @Field({ nullable: true })
   readonly isCorrect: boolean;
 
-  @Field(type => Int, { nullable: true })
+  @Field((type) => Int, { nullable: true })
   readonly rank: number;
 }
