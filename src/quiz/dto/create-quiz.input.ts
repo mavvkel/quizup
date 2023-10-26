@@ -6,6 +6,6 @@ export class CreateQuizInput {
   @Field()
   readonly title: string;
 
-  @Field(type => [CreateQuestionInput])
+  @Field((type) => [CreateQuestionInput])
   readonly questions: CreateQuestionInput[];
 }

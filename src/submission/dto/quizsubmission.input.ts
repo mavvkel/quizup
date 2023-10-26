@@ -6,6 +6,6 @@ export class QuizSubmissionInput {
   @Field((type) => Int!)
   readonly quizID: number;
 
-  @Field(type => [QuestionSubmissionInput])
+  @Field((type) => [QuestionSubmissionInput])
   readonly answers: QuestionSubmissionInput[];
 }

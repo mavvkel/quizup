@@ -9,14 +9,14 @@ import { Answer } from '../../answer/entities/answer.entity';
 import { QuestionType } from './QuestionType';
 import { Quiz } from '../../quiz/entities/quiz.entity';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { registerEnumType } from "@nestjs/graphql";
+import { registerEnumType } from '@nestjs/graphql';
 
-registerEnumType(QuestionType, {name: 'QuestionType'});
+registerEnumType(QuestionType, { name: 'QuestionType' });
 
 @ObjectType()
 @Entity()
 export class Question {
-  @Field(type => Int)
+  @Field((type) => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,13 +24,13 @@ export class Question {
   @Column()
   text: string;
 
-  @Field(type => [Answer])
+  @Field((type) => [Answer])
   @OneToMany(() => Answer, (answer) => answer.question, {
     cascade: ['insert', 'update', 'remove'],
   })
   answers: Answer[];
 
-  @Field(type => QuestionType)
+  @Field((type) => QuestionType)
   @Column({
     type: 'enum',
     enum: QuestionType,
