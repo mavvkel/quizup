@@ -1,4 +1,4 @@
-name: ci
+name: CI
 on:
   pull_request:
     branches: ['*']
@@ -19,14 +19,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Yarn
-        run: npm install -g yarn
-
       - name: Install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Lint code
-        run: yarn lint
+        run: npm lint
 
       - name: Run tests
-        run: yarn test
+        run: npm test
