@@ -36,8 +36,8 @@ import { SubmissionModule } from './submission/submission.module';
       username: process.env.POSTGRES_USER,
       database: process.env.POSTGRES_DB,
       autoLoadEntities: true,
-      synchronize: true, // [DEBUG] remove for prod
-      logging: true,
+      synchronize: false, // [DEBUG] remove for prod
+      logging: false,
     }),
     AnswerModule,
     QuestionModule,
