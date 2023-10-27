@@ -29,7 +29,7 @@ Application for creating, taking & scoring simple quizzes using GraphQL API.
 ## Required dependencies
 node 18.x
 
-Docker
+Docker (for running DB using docker-compose)
 
 ## Installation
 
@@ -38,7 +38,15 @@ $ npm install
 ```
 
 ## Running the app
-First run the container with the postgres DB inside.
+The app requires a .env file with the following variables specified:
+```bash
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+HOST=
+DB_PORT=
+```
+
 ```bash
 $ docker-compose up -d
 ```
@@ -68,6 +76,8 @@ $ npm run test:cov
 ```
 
 ## API usage
+
+To use the GraphQL API manually send POST request with a GraphQL query or mutation in the body to localhost:3000/graphql view to do it via ApolloGraphQL playground.
 
 Retrieve a quiz with
 ```graphql
