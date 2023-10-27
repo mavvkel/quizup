@@ -1,0 +1,43 @@
+# ============ Output types ============ 
+type Mutation {
+  createQuestion(createQuestionInput: CreateQuestionInput!): Question!
+}
+
+interface Question {
+  id: ID!
+  text: String!
+}
+
+type SingleChoiceQuestion implements Question {
+  id: Int!
+  text: String!
+  options: [AnswerOption!]
+  correctAnswer: AnswerOption!
+}
+
+type MultipleChoiceQuestion implements Question {
+  id: Int!
+  text: String!
+  options: [AnswerOption!]
+  correctAnswersIDs: [AnswerOption!]
+}
+
+type SortingQuestion implements Question {
+  id: Int!
+  text: String!
+  options: [AnswerOption!]!
+}
+
+type OpenQuestion implements Question {
+  id: Int!
+  text: String!
+  correctAnswer: AnswerOption!
+}
+
+# ============ Input types ============ 
+input CreateQuestionInput {
+  text: String!
+  answers: [CreateAnswerInput!]!
+  type: Int!
+}
+

@@ -1,0 +1,23 @@
+# ============ Output types ============ 
+type Query {
+  quizzes: [Quiz!]
+  quiz(id: ID!): Quiz
+}
+
+type Mutation {
+  createQuiz(createQuizInput: CreateQuizInput): Quiz
+  # updateQuiz(updateQuizInput: UpdateQuizInput!): Quiz!
+  # removeQuiz(id: Int!): Quiz
+}
+
+type Quiz {
+  id: ID!
+  title: String!
+  questions: [Question!]
+}
+
+# ============ Input types ============ 
+input CreateQuizInput {
+  title: String!
+  questions: [CreateQuestionInput!]!
+}
