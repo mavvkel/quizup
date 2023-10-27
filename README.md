@@ -27,6 +27,7 @@
 Application for creating, taking & scoring simple quizzes using GraphQL API.
 
 ## Required dependencies
+node 18.x
 Docker
 
 ## Installation
