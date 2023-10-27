@@ -1,0 +1,24 @@
+[ ] AnswerService:
+
+    [ ] findByQuestionID: functional (integration/e2e)
+    [ ] findCorrectByQuestionID: functional (integration/e2e)
+    [*] getSorting: unit
+
+[ ] QuestionService:
+
+    [ ] findByQuizID: functional (integration/e2e)
+    [ ] findByID: functional (integration/e2e)
+    [*] augmentQuestionTypes: unit
+        [*] undefined ranks & correctness
+        [*] both ranks & correctness defined
+        [*] no answers
+        [*] correct type assignment for each QuestionType
+    [*] hasDefinedRanks: unit
+        [*] true if all ranks defined
+        [*] false for null
+        [*] false for undefined
+        [*] false for missing rank property
+    [*] countCorrectAnswers: unit
+        [*] counts correctly
+        [*] 0 on empty answers
+        [*] error on missing answers property
